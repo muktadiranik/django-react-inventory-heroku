@@ -1,0 +1,43 @@
+{% block content %}
+<div class="list-group">
+  <div>
+    <form
+      action="{% url 'upload-files' %}"
+      method="post"
+      enctype="multipart/form-data"
+    >
+      <div class="my-3">
+        <select class="form-select" name="category_id">
+          {% for category in categories %}
+          <option value="{{ category.id }}">{{ category.title }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="my-3">
+        {% csrf_token %}
+        <input class="form-control" type="file" name="files" multiple />
+      </div>
+      <div class="my-3">
+        <button class="btn btn-primary" type="submit">Submit</button>
+      </div>
+    </form>
+  </div>
+  {% for category in categories %}
+  <!--  -->
+  {% for file in category.file_set.all %}
+  <div class="list-group-item">
+    <div class="d-inline-flex">
+      <a href="{{ file.file.url }}">{{ file }}</a>
+    </div>
+    <div class="d-inlie-flex float-end">
+      <a href="{% url 'delete-file' file.id %}"
+        ><button class="btn btn-danger">
+          <i class="fa-solid fa-trash"></i></button
+      ></a>
+    </div>
+  </div>
+  {% endfor %}
+  <!--  -->
+  {% endfor %}
+</div>
+{% endblock %}

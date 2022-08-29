@@ -1,0 +1,93 @@
+{% block content %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">Inventory Application</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link active" href="{% url 'logout' %}">
+            Django Default Logout
+          </a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link active" href="{% url 'registration' %}">
+            Django Default Registration
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="{% url 'login' %}">
+            Django Default Login
+          </a>
+        </li>
+
+        {% endif %}
+        <!--  -->
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link active" href="{% url 'account_change_password' %}">
+            Change Password
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="{% url 'account_logout' %}">
+            All Auth Logout
+          </a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link active" href="{% url 'account_signup' %}"
+            >All Auth Signup</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="{% url 'account_login' %}"
+            >All Auth Login</a
+          >
+        </li>
+        {% endif %}
+        <li class="nav-item">
+          <a class="nav-link active" href="{% url 'search-index' %}">Search</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="{% url 'upload-index' %}">Upload</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav me-2 mb-2 mb-lg-0">
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+          <div class="nav-link active">{{ user }}</div>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <div class="nav-link active">anonymous</div>
+        </li>
+        {% endif %}
+      </ul>
+      <form class="d-flex" method="get" action="{% url 'search-index' %}">
+        <input
+          class="form-control me-2"
+          type="search"
+          placeholder="Search"
+          aria-label="Search"
+          name="search_keyword"
+        />
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+{% endblock %}
